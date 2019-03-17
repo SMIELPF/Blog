@@ -1,0 +1,17 @@
+CREATE VIEW js_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='JS';
+CREATE VIEW node_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='NODE';
+CREATE VIEW react_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='REACT';
+CREATE VIEW vue_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='VUE';
+CREATE VIEW webpack_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='WEBPACK';
+CREATE VIEW css_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='CSS';
+CREATE VIEW java_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='JAVA';
+CREATE VIEW cpp_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='CPP';
+CREATE VIEW python_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='PYTHON';
+CREATE VIEW linux_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='LINUX';
+CREATE VIEW mysql_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='MYSQL';
+CREATE VIEW postgresql_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='POSTGRESQL';
+CREATE VIEW redis_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='REDIS';
+CREATE VIEW mongodb_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='MONGODB';
+CREATE VIEW algorithm_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='ALGORITHM';
+CREATE VIEW datastructure_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='DATASTRUCTURE';
+CREATE VIEW ai_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='AI';

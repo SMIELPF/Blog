@@ -2,7 +2,7 @@
   "name": "crawler",
   "version": "1.0.0",
   "description": "爬取简书和思否上我收藏的技术博客",
-  "main": "index.js",
+  "main": "/src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "pg-promise": "^8.6.4",
     "request": "^2.88.0"
   }
 }

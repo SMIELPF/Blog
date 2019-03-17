@@ -1,11 +1,88 @@
 var crawlSegmenFault = require('./crawlSegmentFault.js');
+var BlogDB = require('../dbHandler/BlogDB');
+var db = new BlogDB();
 
-const FRONT_END = 'https://segmentfault.com/bookmark/1230000004834226';
-const SERVER = 'https://segmentfault.com/bookmark/1230000018528532';
-const ALGORITHM = 'https://segmentfault.com/bookmark/1230000018528538';
-const DATABASE = 'https://segmentfault.com/bookmark/1230000018528539';
-const PROBLEM_HANDLE = 'https://segmentfault.com/bookmark/1230000018528552';
+class SegmentFaultCrawler{
+    constructor(){
+        this.crawlerTarget = [
+            {
+                tag:'JS',
+                url:''
+            },
+            {
+                tag:'NODE',
+                url:''
+            },
+            {
+                tag:'REACT',
+                url:''
+            },
+            {
+                tag:'VUE',
+                url:''
+            },
+            {
+                tag:'WEBPACK',
+                url:''
+            },
+            {
+                tag:'CSS',
+                url:''
+            },
+            {
+                tag:'JAVA',
+                url:''
+            },
+            {
+                tag:'CPP',
+                url:''
+            },
+            {
+                tag:'PYTHON',
+                url:''
+            },
+            {
+                tag:'LINUX',
+                url:''
+            },
+            {
+                tag:'MYSQL',
+                url:''
+            },
+            {
+                tag:'POSTGRESQL',
+                url:''
+            },
+            {
+                tag:'REDIS',
+                url:''
+            },
+            {
+                tag:'MONGODB',
+                url:''
+            },
+            {
+                tag:'ALGORITHM',
+                url:''
+            },
+            {
+                tag:'DATASTRUCTURE',
+                url:''
+            },
+            {
+                tag:'AI',
+                url:''
+            }
+        ]
+    }
 
-crawlSegmenFault(FRONT_END).then(articles=>{
-    console.log(articles.length)
-});
+    startCrawl(){
+        for(target of this.crawlerTarget){
+            crawlSegmenFault(target.url).then(articles=>{
+                for(article of articles){
+                    Object.assign(article,{tag:target.tag});
+                }
+            })
+        }
+    }
+}
