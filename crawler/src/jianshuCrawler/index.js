@@ -1,12 +1,84 @@
-var crawlJianShu = require('./crawlJianShu.js');
+var crawlBookMarkPage = require('./crawlBookMarkPage');
+var Crawler = require('../Crawler');
 
-const FRONT_END = 'https://www.jianshu.com/c/4dcf98759530';
-const SERVER = 'https://segmentfault.com/bookmark/1230000018528532';
-const ALGORITHM = 'https://segmentfault.com/bookmark/1230000018528538';
-const DATABASE = 'https://segmentfault.com/bookmark/1230000018528539';
-const PROBLEM_HANDLE = 'https://segmentfault.com/bookmark/1230000018528552';
+class JianshuCrawler extends Crawler{
+    constructor(){
+        super();
+        this.crawlerTargets = [
+            {
+                tag:'JS',
+                url:'https://www.jianshu.com/c/b1f82bbe226e'
+            },
+            {
+                tag:'NODE',
+                url:'https://www.jianshu.com/c/a436e05fdbab'
+            },
+            {
+                tag:'REACT',
+                url:'https://www.jianshu.com/c/4dcf98759530'
+            }/*,
+            {
+                tag:'VUE',
+                url:''
+            },
+            {
+                tag:'WEBPACK',
+                url:''
+            },
+            {
+                tag:'CSS',
+                url:''
+            },
+            {
+                tag:'JAVA',
+                url:''
+            },
+            {
+                tag:'CPP',
+                url:''
+            },
+            {
+                tag:'PYTHON',
+                url:''
+            },
+            {
+                tag:'LINUX',
+                url:''
+            },
+            {
+                tag:'MYSQL',
+                url:''
+            },
+            {
+                tag:'POSTGRESQL',
+                url:''
+            },
+            {
+                tag:'REDIS',
+                url:''
+            },
+            {
+                tag:'MONGODB',
+                url:''
+            },
+            {
+                tag:'ALGORITHM',
+                url:''
+            },
+            {
+                tag:'DATASTRUCTURE',
+                url:''
+            },
+            {
+                tag:'AI',
+                url:''
+            }*/
+        ];
+    }
 
-crawlJianShu(FRONT_END).then(articles=>{
-    console.log(articles.length)
-    console.log(articles)
-});
+    crawl(url){
+        return crawlBookMarkPage(url);
+    }
+}
+
+module.exports = JianshuCrawler;

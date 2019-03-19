@@ -1,22 +1,22 @@
-var crawlSegmenFault = require('./crawlSegmentFault.js');
-var BlogDB = require('../dbHandler/BlogDB');
-var db = new BlogDB();
+var crawlBookMarkPage = require('./crawlBookMarkPage');
+var Crawler = require('../Crawler');
 
-class SegmentFaultCrawler{
+class SegmentFaultCrawler extends Crawler{
     constructor(){
-        this.crawlerTarget = [
+        super();
+        this.crawlerTargets = [
             {
                 tag:'JS',
-                url:''
+                url:'https://segmentfault.com/bookmark/1230000018197926'
             },
             {
                 tag:'NODE',
-                url:''
+                url:'https://segmentfault.com/bookmark/1230000014599301'
             },
             {
                 tag:'REACT',
-                url:''
-            },
+                url:'https://segmentfault.com/bookmark/1230000014428210'
+            }/*,
             {
                 tag:'VUE',
                 url:''
@@ -72,17 +72,13 @@ class SegmentFaultCrawler{
             {
                 tag:'AI',
                 url:''
-            }
-        ]
+            }*/
+        ];
     }
 
-    startCrawl(){
-        for(target of this.crawlerTarget){
-            crawlSegmenFault(target.url).then(articles=>{
-                for(article of articles){
-                    Object.assign(article,{tag:target.tag});
-                }
-            })
-        }
+    crawl(url){
+        return crawlBookMarkPage(url);
     }
 }
+
+module.exports = SegmentFaultCrawler;

@@ -2,8 +2,9 @@
   "name": "crawler",
   "version": "1.0.0",
   "description": "爬取简书和思否上我收藏的技术博客",
-  "main": "/src/app.js",
+  "main": "./src/app.js",
   "scripts": {
+    "start": "node ./src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "philip Lau",
