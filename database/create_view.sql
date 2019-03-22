@@ -15,3 +15,4 @@ CREATE VIEW mongodb_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_ar
 CREATE VIEW algorithm_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='ALGORITHM';
 CREATE VIEW datastructure_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='DATASTRUCTURE';
 CREATE VIEW ai_articles AS SELECT  ROW_NUMBER() OVER (ORDER BY collected_articles.caid DESC),caid,title,date FROM collected_articles WHERE tag='AI';
+CREATE VIEW original_articles_view AS SELECT ROW_NUMBER() OVER (ORDER BY original_articles.oaid DESC),oaid,title,date FROM original_articles;
