@@ -182,7 +182,7 @@ class BlogDB {
      */
     getComments({oaid,start=1,num}){
         //获取所有第oaid号文章下的所有评论
-        const sub_sql = `(SELECT ROW_NUMBER() OVER (ORDER BY rid ASC) AS row_number,* FROM comments WHERE oaid = ${oaid}) t`;
+        const sub_sql = `(SELECT ROW_NUMBER() OVER (ORDER BY cid ASC) AS row_number,* FROM comments WHERE oaid = ${oaid}) t`;
         //根据start和num提取评论
         const sql = `SELECT * FROM  ${sub_sql}  WHERE row_number >= ${start} `+ (num == undefined?`;`:`LIMIT ${num};`);
 
@@ -390,10 +390,10 @@ class BlogDB {
      * 添加新用户，用于注册
      * @param {object} param 
      */
-    insertNewUser({nickname,email,password,role}){
+    insertNewUser({nickname,email,password}){
         return new Promise((resolve,reject)=>{
-            const sql = 'INSERT INTO users(nickname,email,password,role) VALUES(${nickname},${email},${password},${role})';
-            db.none(sql,{nickname,email,password,role})
+            const sql = 'INSERT INTO users(nickname,email,password) VALUES(${nickname},${email},${password})';
+            db.none(sql,{nickname,email,password})
                 .then(()=>{
                     resolve();
                 })
@@ -413,7 +413,7 @@ class BlogDB {
             const sql_1 = `SELECT t.content,t.date_time,t.reply_owner AS owner,original_articles.oaid FROM 
                             (SELECT replys.content,replys.date_time,replys.owner AS reply_owner,comments.owner AS comment_owner,comments.oaid,replys.responder
                                 FROM comments INNER JOIN replys 
-                                ON replys.rid = comments.rid) t 
+                                ON replys.cid = comments.cid) t 
                             INNER JOIN original_articles on t.oaid = original_articles.oaid
                             WHERE t.responder = ${uid} OR original_articles.author = ${uid} OR t.comment_owner = ${uid}`;
             //获取与用户相关的评论
@@ -444,7 +444,7 @@ class BlogDB {
             const sql_1 = `SELECT t.content,t.date_time,t.reply_owner AS owner,original_articles.oaid FROM 
                             (SELECT replys.content,replys.date_time,replys.owner AS reply_owner,comments.owner AS comment_owner,comments.oaid,replys.responder
                                 FROM comments INNER JOIN replys 
-                                ON replys.rid = comments.rid) t 
+                                ON replys.cid = comments.cid) t 
                             INNER JOIN original_articles on t.oaid = original_articles.oaid
                             WHERE t.responder = ${uid} OR original_articles.author = ${uid} OR t.comment_owner = ${uid}`;
             //获取与用户相关的评论
@@ -461,6 +461,24 @@ class BlogDB {
                 .catch(error=>{
                     reject(error);
                 })
+        })
+    }
+
+    /**
+     * 清除用户的未读消息数
+     * @param {number} uid 
+     */
+    clearUserUnreadNum(uid){
+        return new Promise((resolve,reject)=>{
+            const sql = 'UPDATE users SET unread_num=0 WHERE uid=${uid}';
+            db.none(sql,{uid})
+                .then(()=>{
+                    resolve()
+                })
+                .catch(error=>{
+                    reject(error);
+                })
+
         })
     }
 }

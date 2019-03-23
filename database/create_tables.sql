@@ -12,7 +12,7 @@ CREATE TABLE users (
     nickname  VARCHAR(20) NOT NULL,
     password VARCHAR(20) NOT NULL,
     role USER_ROLE DEFAULT 'VISITOR',
-    email VARCHAR(50),
+    email VARCHAR(50) NOT NULL UNIQUE,
     unread_num INTEGER DEFAULT 0
 );
 

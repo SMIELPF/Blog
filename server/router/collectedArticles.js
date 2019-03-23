@@ -14,7 +14,7 @@ function getCollectedArticles(req,res){
     db.getCollectedArticles(param).then(data=>{
         res.json(wrapSucceedData(data));
     }).catch(error=>{
-        res.json(wrapErrorData({data:error}));
+        res.status(404).json(wrapErrorData({data:error}));
     })
 }
 
@@ -22,7 +22,7 @@ function getCollectedArticlesNum(req,res){
     db.getCollectedArticlesNum(req.params.tag).then(data=>{
         res.json(wrapSucceedData(data));
     }).catch(error=>{
-        res.json(wrapErrorData({data:error}));
+        res.status(404).json(wrapErrorData({data:error}));
     })
 }
 
@@ -30,7 +30,7 @@ function getCollectedArticleContent(req,res){
     db.getCollectedArticleContent(req.params.oaid).then(data=>{
         res.json(wrapSucceedData(data));
     }).catch(error=>{
-        res.json(wrapErrorData({data:error}));
+        res.status(404).json(wrapErrorData({data:error}));
     })
 }
 
