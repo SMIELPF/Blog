@@ -103,8 +103,18 @@ function clearUserUnreadNum(req,res){
     })
 }
 
+function getUserInfo(req,res){
+    db.getUserInfoByUid(req.params.uid).then(data=>{
+        res.json(wrapSucceedData(data))
+    }).catch(error=>{
+        res.status(404).json(wrapErrorData({data:error}));
+    })
+}
+
 router.post('/login',login);
 router.post('/register',register);
+
+router.get('/:uid/info',getUserInfo);
 
 router.get('/:uid/messages',getUserMessages);
 router.get('/:uid/messages/num',getUserMessagesNum);

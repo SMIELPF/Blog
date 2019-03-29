@@ -387,6 +387,22 @@ class BlogDB {
     }
 
     /**
+     * 根据uid获取用户信息（用户名）
+     * @param {number} uid 
+     */
+    getUserInfoByUid(uid){
+        return new Promise((resolve,reject)=>{
+            const sql = 'SELECT nickname FROM users WHERE uid = ${uid}';
+            db.one(sql,{uid}).
+                then(data=>{
+                    resolve(data)
+                }).catch(error=>{
+                    reject(error);
+                })
+        })
+    }
+
+    /**
      * 添加新用户，用于注册
      * @param {object} param 
      */

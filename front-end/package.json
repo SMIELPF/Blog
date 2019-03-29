@@ -1,17 +1,25 @@
 {
-  "name": "front-end",
+  "name": "front_end",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "^16.8.4",
-    "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8"
+    "antd": "^3.13.2",
+    "babel-plugin-import": "^1.11.0",
+    "github-markdown-css": "^3.0.1",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "react-redux": "^6.0.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.1.5",
+    "redux": "^4.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -21,5 +29,11 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "proxy": "http://localhost:3001",
+  "devDependencies": {
+    "customize-cra": "^0.2.11",
+    "prop-types": "^15.7.2",
+    "react-app-rewired": "^2.1.0"
+  }
 }

@@ -408,6 +408,26 @@
 }
 ```
 
+### 获取用户信息
+
+- **method**：get
+- **uri**: /api/user/:userId/info
+- **parameters**: null
+- **json sample**:
+
+```json
+request /api/user/1/info
+response:
+{
+    "succeed": true,
+    "errorCode": -1,
+    "message": null,
+    "data": {
+        "nickname": "润楠"
+    }
+}
+```
+
 ### 获取与用户相关的消息(回复，评论)
 
 - **method**：get
