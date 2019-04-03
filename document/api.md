@@ -325,6 +325,66 @@
 }
  ```
 
+### 获取原创文章点赞数
+
+- **method**：get
+- **uri**: /api/original_articles/{oaid}/like
+- **parameters**: null
+- **sample**:
+
+ ```json
+ request: get /api/original_articles/1
+ response:
+{
+    "succeed": true,
+    "errorCode": -1,
+    "message": null,
+    "data": 2
+}
+ ```
+
+### 点赞
+
+- **method**: post
+- **uri**: /api/original_articles/{oaid}/like
+- **parameters**:null
+- **sample**:
+
+```json
+request: post /api/original_articles/1/like
+             body:{
+                 "owner":1
+             }
+response:
+{
+    "succeed": true,
+    "errorCode": -1,
+    "message": null,
+    "data": null
+}
+```
+
+### 取消点赞
+
+- **method**: delete
+- **uri**: /api/original_articles/{oaid}/like
+- **parameters**:null
+- **sample**:
+
+```json
+request: put /api/original_articles/1/like
+             body:{
+                 "owner":1
+             }
+response:
+{
+    "succeed": true,
+    "errorCode": -1,
+    "message": null,
+    "data": null
+}
+```
+
 ## 用户相关
 
 ---
@@ -465,7 +525,7 @@ response:
 
 - **method**：get
 - **uri**: /api/user/:userId/messages/num
-- **parameters**: start,num
+- **parameters**: null
 - **json sample**:
 
 ```json
@@ -479,15 +539,33 @@ response:
 }
 ```
 
-### 清空用户的unread_num
+### 获取用户的未读消息的数量
 
-- **method**：put
-- **uri**: /api/user/:userId/unread_num
+- **method**: get
+- **uri**: /api/user/:userId/messages/unread/num
 - **parameters**: null
 - **json sample**:
 
 ```json
- request: put /api/user/1/unread_num
+ request: get /api/user/1/messages/unread/num
+ response:
+{
+    "succeed": true,
+    "errorCode": -1,
+    "message": null,
+    "data": "2"
+}
+```
+
+### 修改消息已读状态
+
+- **method**：put
+- **uri**: /api/user/messages/:mid
+- **parameters**: null
+- **json sample**:
+
+```json
+ request: put /api/user/messages/1
  response:
 {
     "succeed": true,
@@ -495,3 +573,44 @@ response:
     "message": null,
     "data": null
 }
+```
+
+### 添加新消息
+
+- **method**: post
+- **uri**: /api/user/:uid/messages
+- **parameters**: null
+- **json sample**:
+
+```json
+request: post /api/user/1/messages
+         body:{
+             "oaid":1,
+             "content": "润楠给您的文章《文章1》点了赞"
+         }
+response:
+{
+    "succeed": true,
+    "errorCode": -1,
+    "message": null,
+    "data": null
+}
+```
+
+### 查看用户是否给文章点过赞
+
+- **method**: get
+- **uri**: /api/user/{uid}/like/{oaid}
+- **parameters**:null
+- **sample**:
+
+```json
+request: get /api/user/1/like/1
+response:
+{
+    "succeed": true,
+    "errorCode": -1,
+    "message": null,
+    "data": true
+}
+```

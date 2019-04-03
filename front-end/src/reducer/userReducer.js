@@ -1,18 +1,16 @@
 const LOG_IN = 'LOG_IN';
 const LOG_OUT = 'LOG_OUT';
-const CLEAR_UNREAD_NUM = 'CLEAR_UNREAD_NUM';
+const UPDATE_UNREAD_NUM = 'UPDATE_UNREAD_NUM';
+const INITIAL_UNREAD_NUM = 'INITIAL_UNREAD_NUM';
 
-function reducer(state,action){
+function UserReducer(state,action){
     if(!state){
         return{
             hasLoggedIn:false,
-            info:{
-                nickname:'',
-                uid:0,
-                unread_num:0,
-                role:'VISITOR'
-            }
-
+            nickname:'',
+            uid:0,
+            role:'VISITOR',
+            unread_num:0
         }
     }
 
@@ -22,7 +20,7 @@ function reducer(state,action){
             newState = {
                 ...state,
                 hasLoggedIn:true,
-                info:action.info
+                ...action.info
             };
             break;
         case LOG_OUT:
@@ -31,20 +29,22 @@ function reducer(state,action){
                 hasLoggedIn:false
             };
             break;
-        case CLEAR_UNREAD_NUM:
+        case INITIAL_UNREAD_NUM:
             newState = {
                 ...state,
-                info:{
-                    ...state.info,
-                    unread_num:0
-                }
+                unread_num:action.unread_num
+            };
+            break;
+        case UPDATE_UNREAD_NUM:
+            newState = {
+                ...state,
+                unread_num:state.unread_num - 1
             };
             break;
         default:
             return state;   
     }
-    console.log(newState);
     return newState;
 }
 
-export default reducer;
+export default UserReducer;

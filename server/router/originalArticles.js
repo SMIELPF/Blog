@@ -106,6 +106,41 @@ function getReplysNum(req,res){
     })
 }
 
+function getLikedNum(req,res){
+    db.getLikedNum(req.params.oaid).then(data=>{
+        res.json(wrapSucceedData(data));
+    }).catch(error=>{
+        res.status(404).json(wrapErrorData({data:error}));
+    })
+}
+
+function postLike(req,res){
+    const param ={
+        oaid:req.params.oaid,
+        owner:req.body.owner
+    }
+
+    db.insertLike(param).then(()=>{
+        res.json(wrapSucceedData(null));
+    }).catch(error=>{
+        res.status(500).json(wrapErrorData({data:error}));
+    })
+}
+
+function deleteLike(req,res){
+    const param ={
+        oaid:req.params.oaid,
+        owner:req.body.owner
+    }
+
+    db.deleteLike(param).then(()=>{
+        res.json(wrapSucceedData(null));
+    }).catch(error=>{
+        res.status(500).json(wrapErrorData({data:error}));
+    })
+}
+
+
 //文章
 router.route('/')
         .get(getOriginalArticles)
@@ -124,5 +159,11 @@ router.route('/comments/:cid/replys')
         .get(getReplys)
         .post(postNewReply);
 router.get('/comments/:cid/replys/num',getReplysNum);
+
+//点赞
+router.route('/:oaid/like')
+        .get(getLikedNum)
+        .post(postLike)
+        .delete(deleteLike)
 
 module.exports = router;

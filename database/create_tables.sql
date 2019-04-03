@@ -12,8 +12,7 @@ CREATE TABLE users (
     nickname  VARCHAR(20) NOT NULL,
     password VARCHAR(20) NOT NULL,
     role USER_ROLE DEFAULT 'VISITOR',
-    email VARCHAR(50) NOT NULL UNIQUE,
-    unread_num INTEGER DEFAULT 0
+    email VARCHAR(50) NOT NULL UNIQUE
 );
 
 -- 表2：从其他博客网站收藏的文章
@@ -61,4 +60,26 @@ CREATE TABLE replys (
     FOREIGN KEY (cid) REFERENCES comments(cid)
 );
 
+-- 表6：对文章的点赞
+CREATE TABLE likes (
+    lid SERIAL PRIMARY KEY,
+    oaid INTEGER,
+    owner INTEGER,
+    date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (owner) REFERENCES users(uid),
+    FOREIGN KEY (oaid) REFERENCES original_articles(oaid)
+);
+
+-- 表7：用户的消息
+CREATE TABLE messages (
+    mid SERIAL PRIMARY KEY,
+    uid INTEGER,
+    oaid INTEGER,
+    title TEXT,
+    content TEXT,
+    unread BOOLEAN DEFAULT TRUE,
+    date_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (uid) REFERENCES users(uid),
+    FOREIGN KEY (oaid) REFERENCES original_articles(oaid)
+)
 

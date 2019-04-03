@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {List,Icon, message}from 'antd'
+import {List,Icon, message, Empty}from 'antd'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import Api from '../utils/Api'
@@ -12,7 +12,7 @@ class CollectedArticleList extends Component{
         this.state = {
             data:[],
             loading:true,
-            total:0
+            total:-1
         }
     }
 
@@ -84,16 +84,17 @@ class CollectedArticleList extends Component{
                     }
                 });
             },
-            hideOnSinglePage:false,
+            hideOnSinglePage:true,
             total:this.state.total,
             pageSize:this.props.pageSize
         }
         return (
-            <List split size='small' 
-                  dataSource={data} 
-                  loading={loading}  
-                  renderItem={renderItem}
-                  pagination={this.props.showPagnation?pagnationConfig:null}/>
+            Number(this.state.total)===-1?null:<List split size='small' 
+                                                dataSource={data}   
+                                                loading={loading}  
+                                                renderItem={renderItem}
+                                                pagination={this.props.showPagnation?pagnationConfig:null}
+                                                locale={{emptyText:<Empty description='该收藏夹下还没有文章'/>}}/>
         )
     }
 }

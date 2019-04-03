@@ -27,7 +27,7 @@ class App extends Component{
                             <Row>
                                 <Navigator/>
                             </Row>
-                            <Row>
+                            <Row >
                                 <Main/>
                             </Row>
                         </Col>

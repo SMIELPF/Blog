@@ -7,11 +7,11 @@ let JSCrawler = new JianshuCrawler();
 let SFCrawler = new SegmentFaultCrawler();
 
 Log.recordCrawlTime()
-JSCrawler.start();
 SFCrawler.start();
+JSCrawler.start();
 
 let timer = setInterval(() => {
-    if(i === 5){
+    if(i === 1){
         clearInterval(timer);
     }else{
         console.log(`第${i}次爬虫`)

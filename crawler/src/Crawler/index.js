@@ -13,7 +13,7 @@ class Crawler{
      */
     crawlBookMark(target){
         return new Promise(resolve=>{
-            this.crawl(target.url).then(articles=>{; 
+            this.crawl(target.url).then(articles=>{
                 //给每篇文章添加tag属性
                 for(let article of articles){
                     Object.assign(article,{tag:target.tag});
@@ -80,12 +80,12 @@ class Crawler{
     start(){
         for(let target of this.crawlerTargets){
             this.crawlBookMark(target).then(articles=>{
+                console.log('爬取',target.url,'数量：',articles.length);
                 const newArticles = this.getNewArticles(target,articles);
                 this.insertArticleIntoDB(newArticles);
             })
         }
         this.crawledNumber ++;
-        console.log(this.crawlerTargets);
     }
 }
 

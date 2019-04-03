@@ -9,7 +9,7 @@ const CollectedArticleSection = (props)=>{
     return(
         <Switch>
             <Route exact path={path} render={()=>List}></Route>
-            <Route path={`${path}/:oaid`} component={CollectedArticleContent}></Route>
+            <Route path={`${path}/:caid`} component={CollectedArticleContent}></Route>
         </Switch>
     )
 }

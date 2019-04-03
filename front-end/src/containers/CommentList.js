@@ -1,22 +1,23 @@
 import React,{Component} from 'react';
-import { List, Comment,Avatar } from 'antd';
+import { List, Empty } from 'antd';
 import { PropTypes } from 'prop-types';
 import Api from './../utils/Api';
+import CommentItem from './CommentItem';
 
 const {Item} = List;
 
-class ReplyList extends Component{
+class CommentList extends Component{
     constructor(){
         super()
         this.state = {
             loading:true,
-            total:0,
+            total:-1,
             data:[]
         }
     }
 
     componentWillMount(){
-        Api.getReplysNum(this.props.cid).then(res=>{
+        Api.getCommentsNum(this.props.oaid).then(res=>{
             if(res.succeed){
                 this.setState({total:res.data});
             }
@@ -26,7 +27,7 @@ class ReplyList extends Component{
     }
 
     componentWillReceiveProps(props){
-        Api.getReplysNum(props.cid).then(res=>{
+        Api.getCommentsNum(props.oaid).then(res=>{
             if(res.succeed){
                 this.setState({total:res.data});
             }
@@ -36,8 +37,8 @@ class ReplyList extends Component{
     }
 
     loadData(start,num){
-        Api.getReplys({
-            cid:this.props.cid,
+        Api.getComments({
+            oaid:this.props.oaid,
             start:start,
             num:num
         }).then(res=>{
@@ -62,17 +63,13 @@ class ReplyList extends Component{
     render(){
         const {loading,data,total} = this.state;
         const renderItem = item=>{
-            const handleReplyOnClick = ()=>{
-                this.props.onReplyItem(item.owner)
-            }
-            const replyProps = {
-                author:item.reply_author,
-                avatar:<Avatar style={{ backgroundColor: '#87d068' }}>{item.reply_author}</Avatar>,
-                content:item.content,
-                datetime:item.date_time,
-                actions:[<span onClick={handleReplyOnClick}>回复</span>]
-            }
-            return <Item><Comment {...replyProps}/></Item>
+            return (
+                <Item>
+                    <CommentItem cid={item.cid} owner={item.owner} 
+                                 date_time={item.date_time} content={item.content}
+                                 author={item.comment_author}/>
+                </Item>
+            )
         }
 
         const pagnationConfig = {
@@ -84,23 +81,19 @@ class ReplyList extends Component{
             pageSize:this.props.pageSize
         }
         return (
-            Number(total) === 0?null:<List split size='small' 
+            Number(total) === -1?null:<List split size='small' 
                                             dataSource={data} 
                                             loading={loading}  
                                             renderItem={renderItem}
-                                            pagination={pagnationConfig}/>
+                                            pagination={pagnationConfig}
+                                            locale={{emptyText:<Empty description='还没有评论哦，快来抢沙发吧~'/>}}/>
         )
     }
 }
 
-ReplyList.propTypes = {
-    cid:PropTypes.number,
-    pageSize:PropTypes.number,
-    onReplyItem:PropTypes.func
+CommentList.propTypes = {
+    oaid:PropTypes.string,
+    pageSize:PropTypes.number
 }
 
-ReplyList.defaultProps = {
-    pageSize:5
-}
-
-export default ReplyList
+export default CommentList;

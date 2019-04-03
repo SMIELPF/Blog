@@ -2,17 +2,25 @@ import React,{Component} from 'react';
 import LogInBox from './LogInBox';
 import UserInfoBox from './UserInfoBox';
 import { Row,Col } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import { connect } from 'react-redux';
 import createLogInAction from './../actions/logIn';
+import createInitialUnreadNumAction from '../actions/initialUnreadNum';
+import Api from './../utils/Api';
 
 class HeaderContent extends Component{
     componentWillMount(){
-        console.log('component will mount')
-        const info = localStorage.getItem('userInfo');
+        let info = localStorage.getItem('userInfo');
         if(info){
-            const infoObject = JSON.parse(info);
-            this.props.onGetInfoFromStorage(infoObject);
+            info = JSON.parse(info);
+            this.props.onGetInfoFromStorage(info);
+            
+            //获取最新的未读消息数
+            Api.getUserUnreadNum(info.uid).then(res=>{
+                if(res.succeed){
+                    this.props.onGetUnreadNum(res.data);
+                }
+            })
         }
     }
 
@@ -32,7 +40,7 @@ class HeaderContent extends Component{
 
 function mapStateToProps(state){
     return {
-        hasLoggedIn:state.hasLoggedIn
+        hasLoggedIn:state.user.hasLoggedIn
     }
 }
 
@@ -40,6 +48,9 @@ function mapDispatchToProps(dispatch){
     return {
         onGetInfoFromStorage:(info)=>{
             dispatch(createLogInAction(info));
+        },
+        onGetUnreadNum:(num)=>{
+            dispatch(createInitialUnreadNumAction(num));
         }
     }
 }

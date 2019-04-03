@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom'
 import * as serviceWorker from './serviceWorker';
 import App from './containers/App';
-import reducer  from './reducers/reducer'
+import reducer  from './reducer'
 import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import './theme.less'

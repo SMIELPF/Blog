@@ -1,0 +1,15 @@
+{
+    "sqltools.connections": [
+        {
+            "askForPassword": false,
+            "connectionTimeout": 30,
+            "database": "blog_db2",
+            "dialect": "PostgreSQL",
+            "name": "blog",
+            "password": "smielpf1204.",
+            "port": 5432,
+            "server": "127.0.0.1",
+            "username": "postgres"
+        }
+    ]
+}

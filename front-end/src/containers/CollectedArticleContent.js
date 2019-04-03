@@ -1,6 +1,6 @@
 import React,{Component} from 'react';
-import CollectedArticleContent from './../components/CollectedArticleContent';
-import Api from './../utils/Api';
+import CollectedArticleContent from '../components/CollectedArticleContent';
+import Api from '../utils/Api';
 import { Spin } from 'antd';
 
 class CollectedArticleContentContainer extends Component{
@@ -21,7 +21,7 @@ class CollectedArticleContentContainer extends Component{
     }
 
     loadData(){
-        Api.getCollectedArticleContent(this.props.match.params.oaid).then(res=>{
+        Api.getCollectedArticleContent(this.props.match.params.caid).then(res=>{
             if(res.succeed){
                 this.setState({
                     title:res.data.title,

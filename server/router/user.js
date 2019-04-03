@@ -18,7 +18,7 @@ function login(req,res){
                 const resBody = {
                     uid:data.uid,
                     nickname:data.nickname,
-                    unread_num:data.unread_num
+                    role:data.role
                 }
                 res.json(wrapSucceedData(resBody));
             }else{
@@ -36,7 +36,7 @@ function login(req,res){
                     const resBody = {
                         uid:data.uid,
                         nickname:data.nickname,
-                        unread_num:data.unread_num
+                        role:data.role
                     }
                     res.json(wrapSucceedData(resBody));
                 }else{
@@ -95,14 +95,6 @@ function getUserMessagesNum(req,res){
     })
 }
 
-function clearUserUnreadNum(req,res){
-    db.clearUserUnreadNum(req.params.uid).then(()=>{
-        res.json(wrapSucceedData(null))
-    }).catch(error=>{
-        res.status(404).json(wrapErrorData({data:error}));
-    })
-}
-
 function getUserInfo(req,res){
     db.getUserInfoByUid(req.params.uid).then(data=>{
         res.json(wrapSucceedData(data))
@@ -111,14 +103,60 @@ function getUserInfo(req,res){
     })
 }
 
+function getUserDidLikeArticle(req,res){
+    const param = {
+        uid:req.params.uid,
+        oaid:req.params.oaid
+    }
+
+    db.getUserDidLikeArticle(param).then(data=>{
+        res.json(wrapSucceedData(data))
+    }).catch(error=>{
+        res.status(404).json(wrapErrorData({data:error}));
+    })
+}
+
+function getUserUnreadNum(req,res){
+    db.getUserUnreadNum(req.params.uid).then(data=>{
+        res.json(wrapSucceedData(data))
+    }).catch(error=>{
+        res.status(404).json(wrapErrorData({data:error}));
+    })
+}
+
+function putMessageStatus(req,res){
+    db.updateMessageStatus(req.params.mid).then(()=>{
+        res.json(wrapSucceedData(null))
+    }).catch(error=>{
+        res.status(404).json(wrapErrorData({data:error}));
+    })
+}
+
+function postNewMessage(req,res){
+    const param = {
+        uid:req.params.uid,
+        ...req.body
+    }
+    db.insertNewMessage(param).then(()=>{
+        res.json(wrapSucceedData(null))
+    }).catch(error=>{
+        res.status(404).json(wrapErrorData({data:error}));
+    })
+}
+
+
 router.post('/login',login);
 router.post('/register',register);
 
 router.get('/:uid/info',getUserInfo);
 
-router.get('/:uid/messages',getUserMessages);
+router.route('/:uid/messages')
+        .get(getUserMessages)
+        .post(postNewMessage);
 router.get('/:uid/messages/num',getUserMessagesNum);
+router.get('/:uid/messages/unread/num',getUserUnreadNum);
+router.put('/messages/:mid',putMessageStatus);
 
-router.put('/:uid/unread_num',clearUserUnreadNum)
+router.get('/:uid/like/:oaid',getUserDidLikeArticle);
 
 module.exports = router;

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import {connect} from 'react-redux';
 import createlogInAction from '../actions/logIn';
+import createInitialUnreadNumAction from '../actions/initialUnreadNum';
 
 
 class LogInBox extends Component{
@@ -23,6 +24,12 @@ class LogInBox extends Component{
                         if(res.succeed){
                             //登录成功，更新store中的用户信息
                             this.props.setInfo(res.data);
+                            //获取最新的unread_num
+                            Api.getUserUnreadNum(res.data.uid).then(response=>{
+                                if(response.succeed){
+                                    this.props.onGetUnreadNum(response.data);
+                                }
+                            })
                             //更新localStorage
                             localStorage.setItem('userInfo',JSON.stringify(res.data));
                         }else{
@@ -101,6 +108,9 @@ const mapDispatchToProps = (dispatch)=>{
     return {
         setInfo:(info)=>{
             dispatch(createlogInAction(info));
+        },
+        onGetUnreadNum:(num)=>{
+            dispatch(createInitialUnreadNumAction(num));
         }
     }
 }
